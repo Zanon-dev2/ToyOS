@@ -1,0 +1,5 @@
+g++ -m64 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector -mno-red-zone -c toy.cpp -o toy.o && \
+ld -m elf_x86_64 -T linker.ld boot.o toy.o -o mykernel.bin --no-warn-rwx-segments -z noexecstack && \
+cp mykernel.bin raiz/boot/mykernel.bin && \
+grub-mkrescue -o Toy.iso raiz && \
+qemu-system-x86_64 -cdrom Toy.iso -boot d -no-reboot

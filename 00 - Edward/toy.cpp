@@ -1,3 +1,4 @@
+//Please, ignore some comments that I made while programming, I have no experience with Bare Metal and joked 'bout it a little
 //QUE LINGUAGEM PRIMITIVA É ESSA? C-------------------------------------------------------------------
 typedef unsigned int uint32_t;
 typedef unsigned short uint16_t;
@@ -25,10 +26,10 @@ class passo{
     }
 };
 passo mk;
-#define cmd_password "Senha"
-#define cmd_defpassword "defSenha"
+#define cmd_password "Password"
+#define cmd_defpassword "defPassword"
 #define cmd_help "Help"
-#define cmd_shhash "hashSenha"
+#define cmd_shhash "hashPassword"
 #define cmd_clear "Clear"
 #define cmd_read "Read"
 #define cmd_write "writeAt"
@@ -289,10 +290,10 @@ bool conf(const char* senha){
     bool acesso;
     if (hash(senha)==p.passwort) {
         acesso = true;
-        zout<<"Senha correta";
+        zout<<"Right Password";
     } else {
         acesso = false;
-        zout<<"Senha errada";
+        zout<<"Wrong Password";
     }
     return acesso;
 }
@@ -313,25 +314,25 @@ void leitorDeComandos(const char *entrada){
     constexpr unsigned int IDLIST = hash(cmd_list);
 
     auto iftrue = [](){
-        zout<<"Senha: ";
+        zout<<"Password: ";
         char sen[128];
         zin>>sen; 
         p.defPasswort(sen);
-        zout<<"senha definida";
+        zout<<"Password defined";
     };
     auto iffalse = [](){
-        zout<<"Senha antiga: ";
+        zout<<"Actual password: ";
         char senhaAntiga[128];
         zin >> senhaAntiga;
         if (conf(senhaAntiga)){
-            zout<<"\nSenha correta, digite a nova senha: ";
+            zout<<"\nRight password\nnew password: ";
             char novaSenha[128];
             zin>>novaSenha;
             p.defPasswort(novaSenha);
         }
     };
     constexpr auto list = [](){
-        zout<<"Help\ndefSenha\nSenha\nhashSenha\nClear\nRead\nwriteAt\nls";
+        zout<<"Help\ndefPassword\nPassword\nhashPassword\nClear\nRead\nwriteAt\nls";
     };
     auto sn = [](){
         zout<<"senha: ";
@@ -368,7 +369,7 @@ void leitorDeComandos(const char *entrada){
                     files[fnum].nome[index] = temp.nome[index];
                     ++index;
                 }
-                zio<<"deve ser protegido?[true or false]\n">>tr<<"conteudo do arquivo:\n">>files[fnum].cont;
+                zio<<"Should be protected?[true or false]\n">>tr<<"content:\n">>files[fnum].cont;
                 if (strcmp(tr, "true")) {
                     files[fnum].sec = true;
                 }
@@ -385,10 +386,10 @@ void leitorDeComandos(const char *entrada){
                             break;
                         }
                     }
-                    zio<<"conteudo: ">>files[pos].cont;
+                    zio<<"content: ">>files[pos].cont;
                 }
                 else {
-                    zio<<"conteudo: ">>files[pos].cont;
+                    zio<<"content: ">>files[pos].cont;
                 }
             }
             break;
@@ -409,7 +410,7 @@ void leitorDeComandos(const char *entrada){
                     }
                 }
                 if(!enc){
-                    zout<<"desconhecido";
+                    zout<<"Unknown";
                 }
             }
             break;
@@ -436,7 +437,7 @@ void leitorDeComandos(const char *entrada){
             mk.cursor = 0;
             break;
         default:
-            zout<<"Digite Help para a lista de comandos";
+            zout<<"Type help for the command list";
             break;
     }
 }

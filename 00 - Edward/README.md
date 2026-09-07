@@ -1,4 +1,4 @@
-#Edward
+#Edward\n
 it's an simple Toy OS that can read n creat files, it also has password
 #Password
 U can define a password with defPassword and it'll be saved as a simple hash for comparison later

@@ -29,9 +29,11 @@ Written in freestanding C++ with zero external dependencies, **Tanya** introduce
 Compile in 64-bit freestanding mode without standard libraries or RTTI, link with your bootloader, and test on an emulator like QEMU:
 
 ```bash
-g++ -m32 -ffreestanding -fno-exceptions -fno-rtti -O2 -c Tanya.cpp -o Tanya.o
-# Link Tanya.o with your bootloader assembly and boot in QEMU:
-qemu-system-i386 -kernel tanya.bin
+nasm -f elf64 boot.asm -o boot.o && g++ -m64 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector -mno-red-zone -c Tanya.cpp -o Tanya.o && \
+ld -m elf_x86_64 -T linker.ld boot.o Tanya.o -o mykernel.bin --no-warn-rwx-segments -z noexecstack && \
+cp mykernel.bin raiz/boot/mykernel.bin && \
+grub-mkrescue -o Tanya.iso raiz && \
+qemu-system-x86_64 -cdrom Tanya.iso -boot d -no-reboot
 ```
 
 ---

@@ -37,4 +37,3 @@ qemu-system-x86_64 -cdrom Tanya.iso -boot d -no-reboot
 ```
 
 ---
-Part of the [ToyOS](../README.md) project by [Zanon-dev2](https://github.com/Zanon-dev2).

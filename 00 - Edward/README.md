@@ -30,9 +30,11 @@ Built to explore direct hardware interaction without an underlying OS or standar
 Compile in 64-bit freestanding mode without the C++ standard library or runtime exceptions, then link with your bootloader (e.g., GRUB/Multiboot):
 
 ```bash
-g++ -m32 -ffreestanding -fno-exceptions -fno-rtti -O2 -c toy.cpp -o toy.o
-# Link toy.o with your bootloader assembly and boot in QEMU:
-qemu-system-i386 -kernel edward.bin
+g++ -m64 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-protector -mno-red-zone -c toy.cpp -o toy.o && \
+ld -m elf_x86_64 -T linker.ld boot.o toy.o -o mykernel.bin --no-warn-rwx-segments -z noexecstack && \
+cp mykernel.bin raiz/boot/mykernel.bin && \
+grub-mkrescue -o Toy.iso raiz && \
+qemu-system-x86_64 -cdrom Toy.iso -boot d -no-reboot
 ```
 
 ---
